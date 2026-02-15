@@ -1,0 +1,127 @@
+@use "../../../styles/index" as *;
+
+.navcontainer {
+	@include grid-layout();
+	padding-top: var(--space-m);
+	width: 100%;
+}
+
+.navbar {
+	@include center-row-flex();
+	box-shadow: var(--shadow-small);
+	border-radius: var(--radius-md);
+	padding: var(--space-xs) var(--space-s) var(--space-xs) var(--space-s);
+}
+
+.navlinkscontainer {
+	@include center-row-flex();
+	gap: var(--space-m);
+}
+
+.links {
+	@include center-row-flex();
+	list-style: none;
+	gap: var(--space-m);
+	a {
+		display: inline-block;
+		transition: transform 0.15s ease;
+	}
+	a:hover:not(.signup) {
+		text-decoration: underline;
+		transform: scale(1.05);
+	}
+
+	@include hide-on-mobile();
+}
+
+.buttons {
+	@include center-row-flex();
+	gap: var(--space-m);
+}
+
+.signin,
+.signup {
+	display: inline-flex;
+	border: var(--border-thin) solid var(--primary);
+	border-radius: var(--radius-full);
+	padding: var(--space-xxs) var(--space-s) var(--space-xxs) var(--space-s);
+}
+
+.signin {
+	&:hover {
+		background-color: var(--stroke-weak);
+		border: var(--border-thin) solid var(--stroke-weak);
+		color: var(--text-strong);
+	}
+}
+
+.signup {
+	background-color: var(--primary);
+	color: var(--bg);
+
+	&:hover {
+		text-decoration: none;
+		background-color: var(--stroke-weak);
+		border: var(--border-thin) solid var(--stroke-weak);
+		color: var(--text-strong);
+	}
+}
+
+.logo {
+	font-family: var(--font-logo);
+	font-size: var(--font-l);
+	color: var(--primary);
+}
+
+.navsection {
+	display: flex;
+}
+
+.hamburgericon {
+	@include hide-on-desktop();
+	display: inline-block;
+}
+
+.overlay {
+	@include hide-on-desktop();
+	visibility: hidden;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: rgb(0, 0, 0, 0.3);
+	backdrop-filter: blur(4px);
+	width: 100%;
+	height: 100vh;
+	opacity: 0;
+	z-index: 1000;
+
+	transition:
+		opacity 0.3s ease,
+		visibility 0s linear 0.3s;
+	&.active {
+		opacity: 1;
+		visibility: visible;
+		transition-delay: 0s;
+	}
+}
+
+.menu {
+	background-color: var(--fill);
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 70%;
+	max-width: 400px;
+	height: 100vh;
+	box-shadow: var(--shadow-small);
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+
+	transform: translateX(100%);
+	transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+	&.active {
+		transform: translateX(0);
+	}
+}

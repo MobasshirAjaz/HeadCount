@@ -1,0 +1,69 @@
+/* ---Screen Sizes--- */
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-laptop: 1024px;
+$breakpoint-desktop: 1280px;
+$breakpoint-wide: 1536px;
+$breakpoint-ultrawide: 2560px;
+
+:root {
+	/* --- LIGHT THEME COLORS --- */
+	--bg: #faf9f6;
+	--primary: #4a7c59;
+	--text-strong: #203025;
+	--text-weak: #37473c;
+	--stroke-strong: #6b8773;
+	--stroke-weak: #afccb8;
+	--fill: #dfede3;
+
+	/* DARK THEME COLORS (Overrides) */
+	&[data-theme="dark"] {
+		--bg: #121212;
+		--primary: #4a7c59;
+		--text-strong: #f0f0f0;
+		--text-weak: #a0a0a0;
+		--stroke-strong: #444444;
+		--stroke-weak: #2a2a2a;
+		--fill: #1e1e1e;
+	}
+
+	/* --- Spacing --- */
+	--space-xxs: 4px;
+	--space-xs: 8px;
+	--space-s: 16px;
+	--space-m: 24px;
+	--space-l: 32px;
+	--space-xl: 48px;
+	--space-xxl: 80px;
+
+	/* --- Fonts --- */
+	--font-main: var(--font-montserrat), system-ui, sans-serif;
+	--font-logo: var(--font-pacifico), system-ui, sans-serif;
+
+	/* --- Font Sizes --- */
+	--font-xs: 0.75rem;
+	--font-s: 0.875rem;
+	--font-m: 1rem;
+	--font-l: 1.25rem;
+	--font-xl: 1.5rem;
+	--font-xxl: 2rem;
+	--font-hero: 3rem;
+
+	/* --- Shadows --- */
+	--shadow-small: 0px 1px 4px rgba(0, 0, 0, 0.16);
+	--shadow-big:
+		0px 10px 36px 0px rgba(0, 0, 0, 0.16),
+		0px 0px 0px 1px rgba(0, 0, 0, 0.06);
+
+	/* --- Border Radius --- */
+	--radius-sm: 8px;
+	--radius-md: 16px;
+	--radius-full: 9999px;
+
+	/* --- Border thickness --- */
+	--border-thin: 2px;
+
+	/* --- Layout & Gutter --- */
+	--max-width: 1200px;
+	--gutter: 1rem;
+}

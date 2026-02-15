@@ -1,0 +1,105 @@
+@use "./variables" as *;
+
+@mixin center-row-flex() {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+}
+
+//3-Column Layout
+@mixin grid-layout($gutter: var(--gutter), $max-width: var(--max-width)) {
+	display: grid;
+	grid-template-columns:
+		[page-start] minmax($gutter, 1fr)
+		[content-start] min(
+			$max-width,
+			calc(100% - (#{$gutter} * 2))
+		) [content-end]
+		minmax($gutter, 1fr) [page-end];
+
+	& > * {
+		grid-column: content;
+	}
+}
+
+@mixin edge-to-edge() {
+	grid-column: page-start / page-end;
+}
+
+@mixin content-full() {
+	grid-column: content;
+}
+
+@mixin right-gutter-only() {
+	grid-column: content-end / page-end;
+}
+
+@mixin left-gutter-only() {
+	grid-column: page-start / content-start;
+}
+
+@mixin leftedge-to-content() {
+	grid-column: page-start / content-end;
+}
+
+@mixin rightedge-to-content() {
+	grid-column: content-start / page-end;
+}
+
+//12 or 4 Column Layout
+
+@mixin sub-grid-12() {
+	display: grid;
+	// Mobile First: 4 columns
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	column-gap: var(--space-s);
+
+	@media (min-width: 768px) {
+		// Tablet/Desktop: 12 columns
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+		column-gap: var(--space-m);
+	}
+
+	& > * {
+		grid-column: 1 /-1;
+	}
+}
+
+//Responsiveness
+
+@mixin hide-on-mobile {
+	@media (max-width: #{$breakpoint-tablet}) {
+		display: none !important;
+	}
+}
+
+@mixin hide-on-desktop {
+	@media (min-width: #{$breakpoint-tablet + 1px}) {
+		display: none !important;
+	}
+}
+
+//button design
+
+@mixin primary-button {
+	background-color: var(--primary);
+	height: var(--space-s);
+	border-radius: var(--radius-sm);
+	color: var(--bg);
+	padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+	display: inline-flex; /* or flex */
+	align-items: center; /* vertical center */
+	justify-content: center;
+	box-shadow: var(--shadow-small);
+	width: fit-content;
+
+	&:hover {
+		background-color: var(--stroke-weak);
+		color: var(--text-strong);
+	}
+
+	&:active {
+		box-shadow: none;
+	}
+}

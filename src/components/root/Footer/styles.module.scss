@@ -1,0 +1,9 @@
+@use "../../../styles/index" as *;
+
+.outercontainer {
+	@include grid-layout();
+	background-color: var(--fill);
+	margin-top: var(--space-l);
+	box-shadow: var(--shadow-big);
+	height: 100px;
+}

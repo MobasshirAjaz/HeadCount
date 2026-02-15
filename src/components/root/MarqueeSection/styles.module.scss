@@ -1,0 +1,90 @@
+@use "../../../styles/index" as *;
+
+.outercontainer {
+	@include grid-layout();
+	margin-top: var(--space-xl);
+}
+
+.textarea {
+	justify-self: center;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+
+	h2 {
+		font-size: var(--font-xxl);
+	}
+}
+
+.marqueearea {
+	@include edge-to-edge();
+	@media (min-width: $breakpoint-wide) {
+		@include content-full();
+	}
+	background-color: var(--fill);
+	margin-top: var(--space-m);
+	overflow: hidden;
+	padding: var(--space-m) 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-s);
+}
+
+.rowline {
+	display: flex;
+	flex-direction: row;
+	gap: var(--space-xs);
+}
+
+.combinedrows {
+	display: flex;
+	flex-direction: row;
+	gap: var(--space-xs);
+	width: max-content;
+	user-select: none;
+}
+
+.righttoleft {
+	animation: scrollleft 30s linear infinite;
+}
+
+.lefttoright {
+	animation: scrollright 30s linear infinite;
+}
+
+.tag {
+	font-size: var(--font-s);
+	white-space: nowrap;
+	border-radius: var(--radius-full);
+	padding: var(--space-xxs) var(--space-xs);
+	border: var(--primary) 2px solid;
+}
+
+.tagFilled {
+	background-color: var(--primary);
+	color: var(--bg);
+}
+
+.tagHollow {
+	color: var(--text-strong);
+	border-radius: var(--radius-full);
+	padding: var(--space-xxs) var(--space-xs);
+}
+
+@keyframes scrollleft {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(calc(-50% - (var(--space-xs) / 2)));
+	}
+}
+
+@keyframes scrollright {
+	from {
+		transform: translateX(calc(-50% - (var(--space-xs) / 2)));
+	}
+	to {
+		transform: translateX(0);
+	}
+}

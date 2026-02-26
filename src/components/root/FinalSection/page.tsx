@@ -1,5 +1,6 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
+import Link from "next/link";
 export default function FinalSection() {
 	return (
 		<section className={`${styles.outercontainer}`}>
@@ -11,7 +12,7 @@ export default function FinalSection() {
 						I invited?” moment.
 					</p>
 					<button className={`${styles.getstartedbutton}`}>
-						Get Started
+						<Link href="/signUp">Get Started</Link>
 					</button>
 				</div>
 				<div className={`${styles.imagearea}`}>

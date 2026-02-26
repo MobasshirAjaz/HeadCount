@@ -1,0 +1,112 @@
+@use "../../../styles/index" as *;
+
+.outercontainer {
+	@include grid-layout();
+	background-color: var(--fill);
+	place-items: center;
+	height: 100vh;
+}
+
+.innercontainer {
+	@include sub-grid-12();
+}
+.signinbox {
+	background-color: var(--bg);
+	width: 400px;
+	box-shadow: var(--shadow-small);
+	border-radius: var(--radius-sm);
+	padding: var(--space-s);
+	font-family: var(--font-main);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-s);
+}
+
+.topbar {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-size: var(--font-l);
+}
+
+.logo {
+	font-family: var(--font-logo);
+	color: var(--primary);
+}
+
+.inputarea {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--space-xs);
+}
+
+.inputmessage {
+	color: red;
+	font-size: var(--font-xs);
+	margin-left: var(--space-xxs);
+}
+
+.inputfield {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	label {
+		margin-left: var(--space-xxs);
+	}
+}
+
+.textbox {
+	height: 40px;
+	width: 100%;
+	border-radius: 5px;
+	border: 1px solid var(--stroke-strong);
+	padding: 0px 10px 0px 10px;
+	font-size: var(--font-m);
+	&:focus {
+		outline: none;
+		border: 2px solid var(--stroke-strong);
+	}
+
+	&.fielderror {
+		border: 2px solid red;
+	}
+}
+
+.pswdarea {
+	position: relative;
+	width: 100%;
+}
+
+.pswdtextbox {
+	width: 100%;
+	padding-right: var(--space-l);
+}
+
+.pswdviewtoggle {
+	position: absolute;
+	right: 0.75rem;
+	top: 50%;
+	transform: translateY(-50%);
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+.messagearea {
+	display: flex;
+	justify-content: space-between;
+}
+
+.forgotpassword {
+	font-size: var(--font-xs);
+	align-self: flex-end;
+	text-wrap: nowrap;
+	justify-self: start;
+}
+
+.submitbutton {
+	@include primary-button();
+}

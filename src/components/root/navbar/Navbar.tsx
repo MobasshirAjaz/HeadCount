@@ -21,13 +21,13 @@ export default function Navbar() {
 							<Link href={"/contact"}>Contact</Link>
 						</li>
 						<li>
-							<Link href={"/signup"} className={styles.signup}>
+							<Link href={"/signUp"} className={styles.signup}>
 								Sign Up
 							</Link>
 						</li>
 					</ul>
 					<div className={styles.buttons}>
-						<Link href={"/signin"} className={styles.signin}>
+						<Link href={"/signIn"} className={styles.signin}>
 							Sign In
 						</Link>
 						<button

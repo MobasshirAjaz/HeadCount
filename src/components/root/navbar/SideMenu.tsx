@@ -27,10 +27,10 @@ export default function SideMenu({
 						<Link href={"/"}>Contact</Link>
 					</li>
 					<li>
-						<Link href={"/"}>Sign Up</Link>
+						<Link href={"/signUp"}>Sign Up</Link>
 					</li>
 					<li>
-						<Link href={"/"}>Sign In</Link>
+						<Link href={"/signIn"}>Sign In</Link>
 					</li>
 				</ul>
 			</aside>

@@ -13,7 +13,7 @@ export default function HeroSection() {
 						keep things organized without the group chat meltdown.
 					</p>
 					<button className={`${styles.getstartedbutton}`}>
-						<Link href="/signup">Get Started</Link>
+						<Link href="/signUp">Get Started</Link>
 					</button>
 				</div>
 				<div className={`${styles.imagearea}`}>

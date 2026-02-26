@@ -7,7 +7,12 @@ export const config = {
 import { auth } from "@/auth";
 
 export const proxy = auth((req) => {
-	if (!req.auth && (req.nextUrl.pathname !== "/signIn" && req.nextUrl.pathname !== "/signUp")) {
+	if (
+		!req.auth &&
+		req.nextUrl.pathname !== "/signIn" &&
+		req.nextUrl.pathname !== "/signUp" &&
+		req.nextUrl.pathname !== "/"
+	) {
 		const newUrl = new URL("/signIn", req.nextUrl.origin);
 		return Response.redirect(newUrl);
 	}

@@ -1,13 +1,15 @@
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function HeroSection() {
+	const t = useTranslations("LandingPage");
 	return (
 		<section className={`${styles.herocontainer}`}>
 			<div className={`${styles.innerherocontainer}`}>
 				<div className={`${styles.textarea}`}>
-					<h1>Guest lists, minus the drama.</h1>
+					<h1>{t("HeroHeading")}</h1>
 					<p>
 						Create events, build guest lists with your family, and
 						keep things organized without the group chat meltdown.

@@ -4,6 +4,8 @@ import * as z from "zod";
 import argon2 from "argon2";
 import { redirect } from "next/navigation";
 import { prisma } from "../../lib/db/prisma";
+import { signIn } from "@/auth";
+import { AuthError } from "next-auth";
 
 type State = {
 	data?: {
@@ -58,12 +60,34 @@ const signUpActionfn: ActionFn = async (
 		});
 
 		console.log("New user = ", newuser);
-	} catch (err) {
-		console.log(err);
+		const user = await signIn("credentials", {
+			email: newuser.email,
+			password: result.data.password,
+			redirectTo: "/events",
+		});
+	} catch (error) {
+		if (error instanceof AuthError) {
+			switch (error.type) {
+				case "CredentialsSignin":
+					return {
+						data: { email: result.data.email },
+						message: "Something went wrong.",
+					};
+				default:
+					return {
+						data: { email: result.data.email },
+						message: "Something went wrong.",
+					};
+			}
+		}
+
+		// VERY IMPORTANT: If it's NOT an AuthError, you must throw it again.
+		// This allows Next.js to process the successful redirect!
+		throw error;
 	}
 
 	return {
-		message: "Invalid Credentials",
+		message: "Something went wrong",
 	};
 };
 export default function SignIn() {

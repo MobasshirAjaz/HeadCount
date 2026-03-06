@@ -7,15 +7,20 @@
 	align-items: center;
 }
 
+@mixin center-col-flex() {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+}
+
 //3-Column Layout
 @mixin grid-layout($gutter: var(--gutter), $max-width: var(--max-width)) {
 	display: grid;
 	grid-template-columns:
 		[page-start] minmax($gutter, 1fr)
-		[content-start] min(
-			$max-width,
-			calc(100% - (#{$gutter} * 2))
-		) [content-end]
+		[content-start] min($max-width, calc(100% - (#{$gutter} * 2)))
+		[content-end]
 		minmax($gutter, 1fr) [page-end];
 
 	& > * {
@@ -101,5 +106,42 @@
 
 	&:active {
 		box-shadow: none;
+	}
+}
+
+@mixin secondary-button {
+	background-color: var(--bg);
+	height: var(--space-s);
+	border-radius: var(--radius-sm);
+	border: 2px solid var(--primary);
+	color: var(--primary);
+	padding: var(--space-xs) var(--space-xs) var(--space-xs) var(--space-xs);
+	display: inline-flex; /* or flex */
+	align-items: center; /* vertical center */
+	justify-content: center;
+	box-shadow: var(--shadow-small);
+	width: fit-content;
+
+	&:hover {
+		background-color: var(--stroke-weak);
+		color: var(--text-strong);
+		border: 2px solid var(--stroke-weak);
+	}
+
+	&:active {
+		box-shadow: none;
+	}
+}
+
+@mixin textbox {
+	height: 40px;
+	width: 100%;
+	border-radius: 5px;
+	border: 1px solid var(--stroke-strong);
+	padding: 0px 10px 0px 10px;
+	font-size: var(--font-m);
+	&:focus {
+		outline: none;
+		border: 2px solid var(--stroke-strong);
 	}
 }

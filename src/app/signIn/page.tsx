@@ -19,10 +19,7 @@ type State = {
 type FormDataType = z.infer<typeof LoginSchema>;
 type ActionFn = (prevState: State, formData: FormDataType) => Promise<State>;
 
-const signInActionfn: ActionFn = async (
-	prevState: State,
-	formData: FormDataType,
-) => {
+const signInActionfn: ActionFn = async (prevState, formData) => {
 	"use server";
 	const result = LoginSchema.safeParse(formData);
 	if (!result.success) {
@@ -42,7 +39,7 @@ const signInActionfn: ActionFn = async (
 		const user = await signIn("credentials", {
 			email: result.data.email,
 			password: result.data.password,
-			redirectTo: "/dashboard",
+			redirectTo: "/events",
 		});
 	} catch (error) {
 		if (error instanceof AuthError) {

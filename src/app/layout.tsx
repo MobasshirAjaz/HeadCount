@@ -2,6 +2,8 @@ import "../styles/globals.scss";
 import { Montserrat } from "next/font/google";
 import { Pacifico } from "next/font/google";
 
+import { NextIntlClientProvider } from "next-intl";
+
 const montserrat = Montserrat({
 	subsets: ["latin"],
 	display: "swap",
@@ -30,7 +32,9 @@ export default function RootLayout({
 			lang="en"
 			className={`${montserrat.variable} ${pacifico.variable}`}
 		>
-			<body>{children}</body>
+			<body>
+				<NextIntlClientProvider>{children}</NextIntlClientProvider>
+			</body>
 		</html>
 	);
 }

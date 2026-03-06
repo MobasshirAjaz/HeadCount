@@ -1,0 +1,34 @@
+@use "../../../styles/index" as *;
+
+.outercontainer {
+	@include grid-layout();
+	margin-top: var(--space-s);
+}
+
+.topbarcontainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 var(--space-xs) 0 var(--space-xs);
+	box-shadow: var(--shadow-small);
+	border-radius: var(--radius-sm);
+}
+
+.logo {
+	font-family: var(--font-logo);
+	color: var(--primary);
+	font-size: var(--font-l);
+}
+
+.avatararea {
+	width: var(--space-l-plus);
+	aspect-ratio: 1/1;
+	img {
+		width: 100%;
+		height: 100%;
+		border-radius: var(--radius-full);
+	}
+
+	cursor: pointer;
+}

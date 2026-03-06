@@ -11,6 +11,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 		authorized: async ({ auth }) => {
 			return !!auth;
 		},
+		jwt({ token, user }) {
+			if (user) {
+				token.id = user.id;
+				token.email = user.email;
+				token.username = user.username;
+				token.image = user.image;
+			}
+
+			return token;
+		},
+		session({ session, token }) {
+			session.user.id = token.id as string;
+			session.user.email = token.email as string;
+			session.user.username = token.username as string | null | undefined;
+			session.user.image = token.image as string | null | undefined;
+
+			return session;
+		},
 	},
 	providers: [
 		Credentials({
@@ -19,7 +37,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				password: {},
 			},
 			authorize: async (credentials) => {
-				console.log(credentials);
 				if (!credentials?.email || !credentials?.password) {
 					throw new CredentialsSignin();
 				}
@@ -28,7 +45,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 						email: credentials?.email as string,
 					},
 				});
-
 				if (!user || !user.password) {
 					throw new CredentialsSignin();
 				}
@@ -37,7 +53,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 					user.password,
 					credentials.password as string,
 				);
-
 				if (!passwordVerified) {
 					throw new CredentialsSignin();
 				}
@@ -45,6 +60,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				return {
 					id: user.id,
 					email: user.email,
+					username: user.username,
+					image: user.image,
 				};
 			},
 		}),

@@ -59,16 +59,7 @@
 }
 
 .textbox {
-	height: 40px;
-	width: 100%;
-	border-radius: 5px;
-	border: 1px solid var(--stroke-strong);
-	padding: 0px 10px 0px 10px;
-	font-size: var(--font-m);
-	&:focus {
-		outline: none;
-		border: 2px solid var(--stroke-strong);
-	}
+	@include textbox;
 
 	&.fielderror {
 		border: 2px solid red;

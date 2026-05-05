@@ -1,5 +1,5 @@
-import TopBar from "@/components/eventsPage/topbar/TopBar";
-import UserNameModal from "@/components/eventsPage/usernameModal/UserNameModal";
+import TopBar from "@/components/topbarLayout/topbar/TopBar";
+import UserNameModal from "@/components/topbarLayout/usernameModal/UserNameModal";
 import { auth } from "@/auth";
 import { User } from "next-auth";
 import { redirect } from "next/navigation";

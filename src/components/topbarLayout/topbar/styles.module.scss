@@ -10,7 +10,7 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0 var(--space-xs) 0 var(--space-xs);
+	padding: var(--space-xxs) var(--space-xs) var(--space-xxs) var(--space-xs);
 	box-shadow: var(--shadow-small);
 	border-radius: var(--radius-sm);
 }

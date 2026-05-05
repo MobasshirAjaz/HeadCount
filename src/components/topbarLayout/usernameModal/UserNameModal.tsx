@@ -49,7 +49,7 @@ export default function UserNameModal({
 	const initialState: State = {
 		data: {
 			username: "",
-			image: "https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.webp",
+			image: "/user.png",
 		},
 		error: {
 			message: "",
@@ -88,12 +88,13 @@ export default function UserNameModal({
 					<div className={`${styles.imagecontainer}`}>
 						<Image
 							src={
-								previewURL ||
+								previewURL ??
 								(initialState.data?.image as string)
 							}
 							width={60}
 							height={60}
 							alt="Profile picture"
+							unoptimized
 						></Image>
 					</div>
 					<div className={`${styles.uploadbuttonarea}`}>

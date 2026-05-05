@@ -1,0 +1,15 @@
+@use "../../../styles/index" as *;
+
+.imagecontainer {
+	position: relative;
+	border-radius: 50%;
+	width: var(--space-l-plus);
+	height: var(--space-l-plus);
+	cursor: pointer;
+}
+
+.avatarimage {
+	width: var(--space-l-plus);
+	height: var(--space-l-plus);
+	border-radius: 50%;
+}

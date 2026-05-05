@@ -1,5 +1,5 @@
-import TopBar from "@/components/eventsPage/topbar/TopBar";
-import UserNameModal from "@/components/eventsPage/usernameModal/UserNameModal";
+import TopBar from "@/components/topbarLayout/topbar/TopBar";
+import UserNameModal from "@/components/topbarLayout/usernameModal/UserNameModal";
 import { auth } from "@/auth";
 import { User } from "next-auth";
 import { redirect } from "next/navigation";
@@ -7,6 +7,7 @@ import * as z from "zod";
 import { UsernameModalSchema } from "@/lib/validations/userprofile.schema";
 import { prisma } from "@/lib/db/prisma";
 
+import { uploadFile } from "@/lib/utils/uploadFile";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { revalidatePath } from "next/cache";
@@ -44,60 +45,27 @@ const usernameServerAction: Actionfn = async (prevstate, formData) => {
 			},
 		};
 	}
-
-	const isFileEmpty = (file: any) => {
-		// 1. Catches undefined, null, empty strings, and the literal string "undefined"
-		if (!file || file === "undefined" || file === "") return true;
-
-		// 2. Catches the browser's 0-byte ghost file
-		if (typeof file === "object" && "size" in file && file.size === 0)
-			return true;
-
-		// 3. Catches files named "undefined" (a common FormData artifact)
-		if (
-			typeof file === "object" &&
-			"name" in file &&
-			file.name === "undefined"
-		)
-			return true;
-
-		return false;
-	};
-	const file = formData.image;
-	let filepath = null;
-	let newfilename = null;
-	if (file && !isFileEmpty(file)) {
-		const originalName = formData.image?.name;
-		const timestamp = Date.now();
-		const uid = session?.user.id;
-
-		newfilename = `${uid}-${timestamp}-${originalName}`;
-		const bytes = await file.arrayBuffer();
-		const buffer = Buffer.from(bytes);
-		const uploaddir = path.join(process.cwd(), "public/uploads");
-		filepath = path.join(uploaddir, newfilename);
-
-		try {
-			await writeFile(filepath, buffer);
-			console.log("File saved successfully");
-		} catch (error) {
-			console.error("Failed to save file : ", error);
-			return {
-				data: {
-					image: prevstate.data?.image,
-					username: prevstate.data?.username,
-				},
-				error: {
-					message: "Something went wrong. Please try again.",
-				},
-			};
-		}
+	let fileurl;
+	try {
+		fileurl = await uploadFile(session, validated.data.image);
+	} catch (error) {
+		console.error("Failed to upload file:", error);
+		return {
+			data: {
+				username: formData.username as string,
+				image: prevstate.data?.image,
+			},
+			error: {
+				message:
+					"Something went wrong. Please try uploading image again.",
+			},
+		};
 	}
 
 	try {
 		const updateUser = await prisma.user.update({
 			where: { id: session.user.id },
-			data: { username: formData.username, image: newfilename },
+			data: { username: formData.username, image: fileurl },
 		});
 		revalidatePath("/", "layout");
 	} catch (error) {

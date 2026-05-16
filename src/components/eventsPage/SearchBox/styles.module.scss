@@ -1,0 +1,18 @@
+@use "../../../styles/index" as *;
+
+.searchcontainer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--space-xs);
+	width: 300px;
+
+	.searchbox {
+		@include textbox();
+	}
+
+	.searchbutton {
+		@include primary-button();
+		padding: var(--space-xs) var(--space-xxs);
+	}
+}

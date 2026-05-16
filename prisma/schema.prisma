@@ -15,3 +15,13 @@ model User {
   image     String?
   username  String?
 }
+
+model Events {
+  id        String    @id @default(uuid())
+  image     String?
+  name      String
+  startDate DateTime  @default(now())
+  endDate   DateTime?
+  parent    String?
+  createdAt DateTime  @default(now())
+}

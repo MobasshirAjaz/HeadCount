@@ -1,0 +1,14 @@
+@use "../../../styles/index" as *;
+
+.headercontainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 10px;
+	border-bottom: 2px solid var(--primary);
+	padding: var(--space-s);
+}
+
+.addeventbutton {
+	@include primary-button();
+}

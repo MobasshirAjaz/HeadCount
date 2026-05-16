@@ -1,0 +1,112 @@
+@use "../../../styles/index" as *;
+
+.eventdialog {
+	width: 100%;
+	max-width: 400px;
+	@media (max-width: $breakpoint-mobile) {
+		max-width: 300px;
+	}
+	position: fixed;
+	inset: 0;
+	margin: auto;
+	border: none;
+	border-radius: var(--radius-sm);
+	padding: 0;
+	padding-bottom: var(--space-s);
+	box-shadow: var(--shadow-small);
+	&[open] {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.addeventform {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+.imagesection {
+	width: 100%;
+	height: 150px;
+	position: relative;
+	img {
+		width: 100%;
+		height: 100%;
+		border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+	}
+
+	.imagebuttonsection {
+		display: flex;
+		position: absolute;
+		bottom: 0;
+		padding: var(--space-xs);
+		gap: var(--space-xs);
+		button {
+			font-size: var(--font-xs);
+			@include secondary-button();
+		}
+	}
+}
+
+.inputsection {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: var(--space-xs);
+	padding: 0 var(--space-xs);
+	.eventname {
+		all: unset;
+		width: 100%;
+		font-size: var(--font-xxl);
+		font-weight: bolder;
+		border: none;
+		align-self: flex-start;
+		margin-top: var(--space-xs);
+	}
+
+	.datesection {
+		display: flex;
+		gap: var(--space-xs);
+
+		.singledate {
+			display: flex;
+			flex-direction: column;
+
+			label {
+				font-size: var(--font-s);
+			}
+
+			.datefield {
+				all: unset;
+				max-width: 130px;
+				padding: var(--space-xs);
+				@media (max-width: $breakpoint-mobile) {
+					max-width: 100px;
+					padding: var(--space-xxs);
+				}
+				border: 2px solid var(--stroke-strong);
+				border-radius: var(--radius-sm);
+				cursor: text;
+			}
+
+			.datefield::-webkit-calendar-picker-indicator {
+				cursor: pointer;
+			}
+		}
+	}
+
+	.buttonarea {
+		display: flex;
+		gap: var(--space-xs);
+		margin-top: var(--space-s);
+		.createbtn {
+			@include primary-button();
+		}
+
+		.discardbtn {
+			@include secondary-button();
+			padding: 6px var(--space-xs);
+		}
+	}
+}

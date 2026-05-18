@@ -10,6 +10,7 @@ import { uploadFile } from "@/lib/utils/uploadFile";
 import { supabase } from "@/lib/supabase/supabase";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 type formDataType = z.infer<typeof EventSchema>;
 
@@ -67,6 +68,7 @@ const serveraction = async (
 				image: fileurl,
 			},
 		});
+		revalidatePath("/events");
 	} catch (err) {
 		console.error("Failed to insert Event in database: ", err);
 		if (fileurl) {
@@ -88,9 +90,6 @@ const serveraction = async (
 			eventName: "",
 			startDate: new Date().toISOString().slice(0, 10),
 			endDate: "",
-		},
-		error: {
-			message: "",
 		},
 	};
 };

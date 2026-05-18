@@ -18,6 +18,8 @@ export default function AddEventForm({
 	onClose: () => void;
 	serveraction: (prevState: State, formData: formDataType) => Promise<State>;
 }) {
+	const dialogRef = useRef<HTMLDialogElement>(null);
+
 	async function serverActionProxy(
 		prevState: State,
 		formData: FormData,
@@ -47,10 +49,14 @@ export default function AddEventForm({
 		}
 		console.log("called backend");
 		const receivedState = await serveraction(prevState, validated.data);
-		console.log("received state=", receivedState);
+		if (!receivedState.error) {
+			const d = dialogRef.current;
+			open = false;
+			// d?.close();
+		}
 		return receivedState;
 	}
-	const dialogRef = useRef<HTMLDialogElement>(null);
+
 	useEffect(() => {
 		const d = dialogRef.current;
 		if (!d) return;

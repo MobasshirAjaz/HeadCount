@@ -27,9 +27,13 @@ export default function SearchBox({ events }: { events: Array<Events> }) {
 	return (
 		<>
 			<div className={`${styles.searchcontainer}`}>
-				<div style={{ display: "block" }}>
+				<div
+					className={`${styles.searchresultscontainer} ${searchResults.length === 0 && styles.noresults}`}
+				>
 					{searchResults.map((event) => (
-						<p key={event.id}>{event.name}</p>
+						<p className={`${styles.searchresult}`} key={event.id}>
+							{event.name}
+						</p>
 					))}
 				</div>
 				<input

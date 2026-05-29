@@ -32,8 +32,6 @@ export async function uploadFile(
 		throw new Error("Failed to upload file:", error);
 	} else {
 		const { data } = supabase.storage.from(bucket).getPublicUrl(filepath);
-
-		console.log("FileUrl:", data.publicUrl);
 		return data.publicUrl;
 	}
 }

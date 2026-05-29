@@ -72,12 +72,9 @@ export default function UserNameModal({
 	}
 
 	function handlefilechange(event: React.ChangeEvent<HTMLInputElement>) {
-		console.log("came here");
 		const file = fileinput.current?.files?.[0];
-		console.log("file=", file);
 		if (file) {
 			const url = URL.createObjectURL(file);
-			console.log("url=", url);
 			setPreviewURL(url);
 		}
 	}

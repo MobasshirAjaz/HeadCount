@@ -1,0 +1,43 @@
+@use "../../../styles/index" as *;
+
+.outercontainer {
+	position: relative;
+
+	.threedoticon {
+		border-radius: 50%;
+		&:hover {
+			outline: 2px solid var(--stroke-strong);
+		}
+		margin-left: auto;
+	}
+	.menucontainer {
+		display: flex;
+		flex-direction: column;
+		position: absolute;
+		top: 100%;
+		z-index: 100;
+		white-space: nowrap;
+		border-radius: var(--radius-sm);
+		background-color: var(--stroke-weak);
+		overflow: hidden;
+		.menuitem {
+			display: flex;
+			align-items: center;
+			gap: var(--space-xs);
+			font-weight: 400;
+			padding: var(--space-xxs) var(--space-xs);
+			&:hover {
+				background-color: var(--stroke-strong);
+			}
+		}
+
+		.menuicon {
+			width: 12px;
+			height: auto;
+		}
+
+		&.hidden {
+			display: none;
+		}
+	}
+}

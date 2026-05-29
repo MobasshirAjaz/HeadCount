@@ -89,7 +89,6 @@ export default async function MainAppLayout({
 	if (!session) {
 		redirect("/signIn");
 	}
-	console.log("User inside layout=", session?.user);
 
 	const user = await prisma.user.findUnique({
 		where: { id: session.user.id },
@@ -100,7 +99,6 @@ export default async function MainAppLayout({
 		redirect("/signIn");
 	}
 
-	console.log("User from Db:", user);
 	return (
 		<>
 			{user.username === null && (

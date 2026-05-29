@@ -26,8 +26,6 @@ const signUpActionfn: ActionFn = async (
 	formData: FormDataType,
 ) => {
 	"use server";
-	console.log("Sing Up:");
-	console.log(formData);
 
 	const result = SignUpSchema.safeParse(formData);
 	if (!result.success) {
@@ -50,7 +48,6 @@ const signUpActionfn: ActionFn = async (
 			timeCost: 3, // 3 iterations
 			parallelism: 4, // Use 4 threads (standard for modern server CPUs)
 		});
-		console.log("Hashed password = ", hashedPassword);
 
 		const newuser = await prisma.user.create({
 			data: {
@@ -59,7 +56,6 @@ const signUpActionfn: ActionFn = async (
 			},
 		});
 
-		console.log("New user = ", newuser);
 		const user = await signIn("credentials", {
 			email: newuser.email,
 			password: result.data.password,

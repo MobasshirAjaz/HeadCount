@@ -8,10 +8,6 @@
 	cursor: pointer;
 	border: 1px solid var(--stroke-weak);
 
-	&:hover {
-		background: var(--fill);
-	}
-
 	&:active {
 		box-shadow: none;
 	}
@@ -36,6 +32,7 @@
 
 		.datecontainer {
 			display: flex;
+			flex-direction: row;
 			font-size: var(--font-xs);
 
 			.date {
@@ -43,9 +40,8 @@
 				color: var(--stroke-strong);
 			}
 
-			.ellipse {
-				font-size: 4px;
-				align-self: flex-end;
+			& > :last-child {
+				margin-left: auto;
 			}
 		}
 	}

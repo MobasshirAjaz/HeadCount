@@ -6,7 +6,6 @@ import path from "path";
 import Avatar from "../avatar/Avatar";
 
 export default function TopBar({ user }: { user: User }) {
-	console.log("topbar user:", user);
 	return (
 		<div className={`${styles.outercontainer}`}>
 			<div className={`${styles.topbarcontainer}`}>

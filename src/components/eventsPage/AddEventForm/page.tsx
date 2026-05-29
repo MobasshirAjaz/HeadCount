@@ -6,28 +6,30 @@ import Image from "next/image";
 import * as z from "zod";
 import { EventSchema } from "@/lib/validations/event.schema";
 import { NewEventState as State } from "@/lib/types/types";
-
-type formDataType = z.infer<typeof EventSchema>;
+import { Events } from "../../../../generated/prisma/browser";
+import { newEventServerAction } from "@/actions/eventsactions";
 
 export default function AddEventForm({
 	open,
 	onClose,
-	serveraction,
+	event,
+	parentevent,
 }: {
 	open: boolean;
 	onClose: () => void;
-	serveraction: (prevState: State, formData: formDataType) => Promise<State>;
+	event: Events | null;
+	parentevent: Events | null;
 }) {
 	const dialogRef = useRef<HTMLDialogElement>(null);
+	const eventimgref = useRef<HTMLInputElement>(null);
 
 	async function serverActionProxy(
 		prevState: State,
 		formData: FormData,
 	): Promise<State> {
 		const fielddata = Object.fromEntries(formData);
-		console.log("frontend received: ", fielddata);
 		const validated = EventSchema.safeParse(fielddata);
-		console.log("frontend validated", validated);
+
 		if (!validated.success) {
 			const flattened = z.flattenError(validated.error);
 			return {
@@ -47,12 +49,18 @@ export default function AddEventForm({
 				},
 			};
 		}
-		console.log("called backend");
-		const receivedState = await serveraction(prevState, validated.data);
+		const receivedState = await newEventServerAction(
+			prevState,
+			validated.data,
+			event,
+			parentevent,
+		);
 		if (!receivedState.error) {
-			const d = dialogRef.current;
-			open = false;
-			// d?.close();
+			if (eventimgref.current) {
+				setPreviewUrl("/hero_image.jpg");
+				eventimgref.current.value = "";
+			}
+			onClose();
 		}
 		return receivedState;
 	}
@@ -68,14 +76,17 @@ export default function AddEventForm({
 		}
 	}, [open]);
 
-	const eventimgref = useRef<HTMLInputElement>(null);
-
+	console.log("inside form:", event);
 	const initialState: State = {
 		data: {
-			eventimgurl: "/hero_image.jpg",
-			eventName: "",
-			startDate: new Date().toISOString().slice(0, 10), // "YYYY-MM-DD"
-			endDate: "",
+			eventimgurl: event?.image || "/hero_image.jpg",
+			eventName: event?.name || "",
+			startDate: event?.startDate
+				? new Date(event.startDate).toISOString().slice(0, 10)
+				: new Date().toISOString().slice(0, 10), // "YYYY-MM-DD"
+			endDate: event?.endDate
+				? new Date(event.endDate).toISOString().slice(0, 10)
+				: "",
 		},
 		error: {
 			message: "",
@@ -95,7 +106,6 @@ export default function AddEventForm({
 	}
 
 	function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
-		console.log("file changed");
 		const file = eventimgref.current?.files?.[0];
 		if (file) {
 			const url = URL.createObjectURL(file);
@@ -107,6 +117,7 @@ export default function AddEventForm({
 			<form className={`${styles.addeventform}`} action={actionfn}>
 				<div className={`${styles.imagesection}`}>
 					<Image
+						className={`${styles.eventimg}`}
 						width={200}
 						height={100}
 						alt="event image"
@@ -147,7 +158,9 @@ export default function AddEventForm({
 					<input
 						className={`${styles.eventname}`}
 						type="text"
-						placeholder="Event name"
+						placeholder={
+							parentevent ? "Subevent name" : "Event name"
+						}
 						maxLength={17}
 						defaultValue={state.data?.eventName}
 						name="eventname"
@@ -181,7 +194,7 @@ export default function AddEventForm({
 							className={`${styles.createbtn}`}
 							disabled={isPending}
 						>
-							Create
+							{event ? "Update" : "Create"}
 						</button>
 						<button
 							type="button"
@@ -189,7 +202,7 @@ export default function AddEventForm({
 							className={`${styles.discardbtn}`}
 							disabled={isPending}
 						>
-							Discard
+							Cancel
 						</button>
 					</div>
 				</div>

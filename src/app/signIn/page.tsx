@@ -2,7 +2,7 @@ import SignInBox from "@/components/signin_signup/signin_container/SignInBox";
 import { LoginSchema } from "@/lib/validations/auth.schema";
 import { redirect } from "next/navigation";
 import * as z from "zod";
-import { signIn } from "@/auth";
+import { auth, signIn } from "@/auth";
 import { AuthError, CredentialsSignin } from "next-auth";
 
 type State = {
@@ -63,6 +63,10 @@ const signInActionfn: ActionFn = async (prevState, formData) => {
 	}
 	return {};
 };
-export default function SignIn() {
+export default async function SignIn() {
+	const session = await auth();
+	if (session) {
+		redirect("/events");
+	}
 	return <SignInBox type="signin" actionFunction={signInActionfn} />;
 }

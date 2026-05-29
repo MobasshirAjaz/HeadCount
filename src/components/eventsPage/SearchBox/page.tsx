@@ -22,7 +22,6 @@ export default function SearchBox({ events }: { events: Array<Events> }) {
 	useEffect(() => {
 		const filtered = search(events, searchvalue);
 		setSearchResults(filtered);
-		console.log(filtered);
 	}, [searchvalue]);
 	return (
 		<>

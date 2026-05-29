@@ -1,9 +1,15 @@
 import { Events } from "../../../../generated/prisma/client";
+import ThreeDotmenu from "../threeDotMenu/page";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import { EllipsisVertical } from "lucide-react";
 
-export default function EventCard({ event }: { event: Events }) {
+export default function EventCard({
+	event,
+	parentevent,
+}: {
+	event: Events;
+	parentevent: Events | null;
+}) {
 	const startDateObj = new Date(event.startDate);
 	const endDateObj = event.endDate && new Date(event.endDate);
 	const formattedStartDate = startDateObj.toLocaleDateString("en-GB");
@@ -25,7 +31,7 @@ export default function EventCard({ event }: { event: Events }) {
 					{formattedEndDate && (
 						<p className={`${styles.date}`}>- {formattedEndDate}</p>
 					)}
-					{/* <EllipsisVertical className={`${styles.ellipse}`} /> */}
+					<ThreeDotmenu eventCard={event} parentevent={parentevent} />
 				</div>
 			</div>
 		</div>

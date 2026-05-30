@@ -1,0 +1,14 @@
+@use "../../../styles/index" as *;
+
+.outercontainer {
+	@include grid-layout();
+
+	.eventscontainer {
+		padding: var(--space-m);
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-m);
+		overflow: hidden;
+		padding-bottom: 70px;
+	}
+}

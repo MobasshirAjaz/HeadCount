@@ -1,15 +1,12 @@
 import TopBar from "@/components/topbarLayout/topbar/TopBar";
 import UserNameModal from "@/components/topbarLayout/usernameModal/UserNameModal";
 import { auth } from "@/auth";
-import { User } from "next-auth";
 import { redirect } from "next/navigation";
 import * as z from "zod";
 import { UsernameModalSchema } from "@/lib/validations/userprofile.schema";
 import { prisma } from "@/lib/db/prisma";
 
 import { uploadFile } from "@/lib/utils/uploadFile";
-import { writeFile } from "fs/promises";
-import path from "path";
 import { revalidatePath } from "next/cache";
 
 type State = {
@@ -47,7 +44,7 @@ const usernameServerAction: Actionfn = async (prevstate, formData) => {
 	}
 	let fileurl;
 	try {
-		fileurl = await uploadFile(session, validated.data.image);
+		fileurl = await uploadFile(session, validated.data.image, "Avatars");
 	} catch (error) {
 		console.error("Failed to upload file:", error);
 		return {
@@ -92,7 +89,6 @@ export default async function MainAppLayout({
 	if (!session) {
 		redirect("/signIn");
 	}
-	console.log("User inside layout=", session?.user);
 
 	const user = await prisma.user.findUnique({
 		where: { id: session.user.id },
@@ -103,7 +99,6 @@ export default async function MainAppLayout({
 		redirect("/signIn");
 	}
 
-	console.log("User from Db:", user);
 	return (
 		<>
 			{user.username === null && (

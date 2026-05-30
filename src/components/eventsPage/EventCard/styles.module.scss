@@ -1,0 +1,52 @@
+@use "../../../styles/index" as *;
+
+.cardoutercontainer {
+	position: relative;
+	& > :last-child {
+		position: absolute;
+		bottom: 0;
+		right: var(--space-xs);
+	}
+	.cardcontainer {
+		border-radius: var(--radius-sm);
+		box-shadow: var(--shadow-small);
+		width: 270px;
+		height: 170px;
+		cursor: pointer;
+		border: 1px solid var(--stroke-weak);
+
+		&:active {
+			box-shadow: none;
+		}
+
+		img {
+			width: 100%;
+			height: 65%;
+			border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+		}
+
+		.eventdetailscontainer {
+			display: flex;
+			flex-direction: column;
+			padding: var(--space-xs);
+			padding-top: 0;
+
+			.eventname {
+				font-size: var(--font-m);
+				font-weight: 500;
+				color: var(--text-strong);
+			}
+
+			.datecontainer {
+				display: flex;
+				flex-direction: row;
+				font-size: var(--font-xs);
+
+				.date {
+					font-size: var(--font-xs);
+					color: var(--stroke-strong);
+				}
+			}
+		}
+	}
+}

@@ -36,14 +36,12 @@ export default function SignInBox({
 		formData: FormData,
 	) => {
 		const fielddata = Object.fromEntries(formData.entries());
-		console.log("data= ", fielddata);
 		const result =
 			type == "signin"
 				? LoginSchema.safeParse(fielddata)
 				: SignUpSchema.safeParse(fielddata);
 		if (!result.success) {
 			const flattened = z.flattenError(result.error);
-			console.log("Flattened frontend= ", flattened);
 			const newstate: State = {
 				data: {
 					email: fielddata.email?.toString(),

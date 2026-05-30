@@ -1,0 +1,58 @@
+@use "../../../styles/index" as *;
+
+.searchcontainer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--space-xs);
+	max-width: 300px;
+	position: relative;
+
+	.searchbox {
+		@include textbox();
+	}
+
+	.searchbutton {
+		@include primary-button();
+		padding: var(--space-xs) var(--space-xxs);
+	}
+
+	.searchresultscontainer {
+		position: absolute;
+		z-index: 100;
+		top: 110%;
+		width: 90%;
+		max-height: 400px;
+		overflow-y: auto;
+		padding: var(--space-xxs);
+		&.noresults {
+			display: none;
+		}
+
+		.searchresult {
+			background: var(--fill);
+			margin: var(--space-xxs) 0;
+			padding: var(--space-xs);
+			border-radius: var(--radius-sm);
+			border: 1px solid var(--stroke-weak);
+			box-shadow: var(--shadow-small);
+
+			&:first-child {
+				border-radius: var(--radius-md) var(--radius-md) 0 0;
+			}
+
+			&:last-child {
+				border-radius: 0 0 var(--radius-md) var(--radius-md);
+			}
+
+			&:only-child {
+				border-radius: var(--radius-md);
+			}
+
+			&:hover {
+				outline: 2px solid var(--text-strong);
+				cursor: pointer;
+			}
+		}
+	}
+}

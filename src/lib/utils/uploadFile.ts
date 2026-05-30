@@ -12,6 +12,7 @@ function isFileEmpty(file?: File | null) {
 export async function uploadFile(
 	session: Session,
 	file: File,
+	bucket: string,
 ): Promise<string> {
 	if (isFileEmpty(file)) {
 		return "";
@@ -25,16 +26,12 @@ export async function uploadFile(
 	const filepath = `uploads/${newfilename}`;
 
 	const { data, error } = await supabase.storage
-		.from("Avatars")
+		.from(bucket)
 		.upload(filepath, file);
 	if (error) {
-		throw new Error("Failed to upload file");
+		throw new Error("Failed to upload file:", error);
 	} else {
-		const { data } = supabase.storage
-			.from("Avatars")
-			.getPublicUrl(filepath);
-
-		console.log("FileUrl:", data.publicUrl);
+		const { data } = supabase.storage.from(bucket).getPublicUrl(filepath);
 		return data.publicUrl;
 	}
 }

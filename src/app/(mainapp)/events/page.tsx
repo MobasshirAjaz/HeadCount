@@ -16,12 +16,13 @@ export default async function EventsPage() {
 			<AddEventSection events={events} parentevent={null} />
 			<div className={`${styles.eventscontainer}`}>
 				{events.map((event) => (
-					<Link key={event.id} href={`/events/${event.id}`}>
-						<EventCard event={event} parentevent={null}></EventCard>
-					</Link>
+					<EventCard
+						key={event.id}
+						event={event}
+						parentevent={null}
+					></EventCard>
 				))}
 			</div>
-			<footer className={`${styles.footer}`}></footer>
 		</div>
 	);
 }

@@ -85,11 +85,11 @@ export const newEventServerAction = async (
 			if (!parentevent) {
 				const newsubevent = await prisma.events.create({
 					data: {
-						name: "Main event",
+						name: newevent.name + " main",
 						startDate: validated.data.startdate,
 						endDate: validated.data.enddate,
 						image: "/hero_image.jpg",
-						parent: null,
+						parent: newevent.id,
 					},
 				});
 			}
@@ -125,6 +125,14 @@ export const newEventServerAction = async (
 
 export async function eventDeleteServerAction(event: Events) {
 	"use server";
+	if (!event.parent) {
+		const childevents = await prisma.events.findMany({
+			where: { parent: event.id },
+		});
+		for (const childevent of childevents) {
+			await eventDeleteServerAction(childevent);
+		}
+	}
 	if (event.image) {
 		// Extract the path after the bucket name ("Events/")
 		// If your URL is ".../public/Events/2026/party.jpg", this extracts "2026/party.jpg"

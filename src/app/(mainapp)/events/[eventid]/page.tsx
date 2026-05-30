@@ -22,18 +22,13 @@ export default async function SubEventPage({ params }: PageProps) {
 			<AddEventSection events={subevents} parentevent={event} />
 			<div className={`${styles.eventscontainer}`}>
 				{subevents.map((subevent) => (
-					<Link
-						href={`./${event?.id}/${subevent.id}`}
+					<EventCard
 						key={subevent.id}
-					>
-						<EventCard
-							event={subevent}
-							parentevent={event}
-						></EventCard>
-					</Link>
+						event={subevent}
+						parentevent={event}
+					></EventCard>
 				))}
 			</div>
-			<footer className={`${styles.footer}`}></footer>
 		</div>
 	);
 }

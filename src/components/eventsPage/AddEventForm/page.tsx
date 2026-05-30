@@ -76,7 +76,6 @@ export default function AddEventForm({
 		}
 	}, [open]);
 
-	console.log("inside form:", event);
 	const initialState: State = {
 		data: {
 			eventimgurl: event?.image || "/hero_image.jpg",

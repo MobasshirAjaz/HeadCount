@@ -2,7 +2,7 @@
 
 import { EllipsisVertical, Trash2, Edit2 } from "lucide-react";
 import styles from "./styles.module.scss";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useTransition } from "react";
 import { Events } from "../../../../generated/prisma/browser";
 import AddEventForm from "../AddEventForm/page";
 import { eventDeleteServerAction } from "@/actions/eventsactions";
@@ -14,12 +14,17 @@ export default function ThreeDotmenu({
 	eventCard: Events;
 	parentevent: Events | null;
 }) {
-	async function handleDelete() {
-		await eventDeleteServerAction(eventCard);
-	}
 	const [menuOpen, setmenuOpen] = useState(false);
 	const [isFormOpen, setIsFormOpen] = useState(false);
+	const [isPending, startTransition] = useTransition();
 	const menuRef = useRef<HTMLDivElement>(null);
+
+	async function handleDelete() {
+		startTransition(async () => {
+			await eventDeleteServerAction(eventCard);
+			setmenuOpen(false);
+		});
+	}
 
 	useEffect(() => {
 		// 2. Define the click handler
@@ -44,12 +49,7 @@ export default function ThreeDotmenu({
 		};
 	}, [menuOpen]); // Only re-run the effect if isOpen changes
 	return (
-		<div
-			onClick={(e) => {
-				e.preventDefault();
-				e.stopPropagation();
-			}}
-		>
+		<div>
 			<div className={`${styles.outercontainer}`} ref={menuRef}>
 				<EllipsisVertical
 					className={`${styles.threedoticon}`}
@@ -63,8 +63,7 @@ export default function ThreeDotmenu({
 					<div
 						className={`${styles.menuitem}`}
 						onClick={(e) => {
-							e.preventDefault();
-							e.stopPropagation();
+							if (isPending) return;
 							handleDelete();
 						}}
 					>

@@ -7,11 +7,10 @@ import { Events } from "../../../../generated/prisma/client";
 
 function search(events: Array<Events>, searchvalue: string) {
 	const filtered: Array<Events> = events.filter((event) => {
-		const ismainevent = !event.parent;
 		const matches = event.name
 			.toLowerCase()
 			.startsWith(searchvalue.toLowerCase());
-		return ismainevent && matches && searchvalue != "";
+		return matches && searchvalue != "";
 	});
 	return filtered;
 }

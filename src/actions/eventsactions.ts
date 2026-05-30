@@ -42,11 +42,11 @@ export const newEventServerAction = async (
 	}
 
 	let fileurl: string | null = "";
+	const session = await auth();
+	if (!session) {
+		redirect("/signIn");
+	}
 	if (validated.data.eventimage) {
-		const session = await auth();
-		if (!session) {
-			redirect("/signIn");
-		}
 		try {
 			fileurl = await uploadFile(
 				session,
@@ -58,7 +58,6 @@ export const newEventServerAction = async (
 			console.error("Failed to upload event image: ", error);
 		}
 	}
-
 	try {
 		if (event) {
 			const updatedevent = await prisma.events.update({
@@ -69,6 +68,8 @@ export const newEventServerAction = async (
 					endDate: validated.data.enddate,
 					image: fileurl ?? event.image,
 					parent: parentevent?.id,
+					createdBy: event.createdBy,
+					updatedBy: session?.user.id,
 				},
 			});
 		} else {
@@ -79,6 +80,8 @@ export const newEventServerAction = async (
 					endDate: validated.data.enddate,
 					image: fileurl,
 					parent: parentevent?.id,
+					createdBy: session?.user.id,
+					updatedBy: session.user.id,
 				},
 			});
 
@@ -90,6 +93,8 @@ export const newEventServerAction = async (
 						endDate: validated.data.enddate,
 						image: "/hero_image.jpg",
 						parent: newevent.id,
+						createdBy: session.user.id,
+						updatedBy: session.user.id,
 					},
 				});
 			}
